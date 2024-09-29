@@ -1,0 +1,41 @@
+<h1 mat-dialog-title>Add course</h1>
+
+<div mat-dialog-content>
+  <p>Enter course details here.</p>
+  <form [formGroup]="form">
+
+    <mat-form-field>
+      <mat-label>Subject</mat-label>
+      <input matInput formControlName="subject" placeholder="Enter subject">
+      <mat-error *ngIf="form.get('subject')?.hasError('required') && form.get('subject')?.touched">
+        Subject is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Course Number</mat-label>
+      <input matInput formControlName="courseNumber" placeholder="Enter course number (e.g., 033)">
+      <mat-error *ngIf="form.get('courseNumber')?.hasError('required') && form.get('courseNumber')?.touched">
+        Course number is required.
+      </mat-error>
+      <mat-error *ngIf="form.get('courseNumber')?.hasError('pattern') && form.get('courseNumber')?.touched">
+        Course number must be a three-digit number.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" placeholder="Enter description"></textarea>
+      <mat-error *ngIf="form.get('description')?.hasError('required') && form.get('description')?.touched">
+        Description is required.
+      </mat-error>
+    </mat-form-field>
+  </form>
+</div>
+
+<div *ngIf="responseError" class="error-message">{{ responseError }}</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onAdd()">Add</button>
+  <button mat-button (click)="onClose()">Close</button>
+</div>

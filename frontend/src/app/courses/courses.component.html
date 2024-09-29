@@ -1,0 +1,63 @@
+<div class="main-container">
+
+  <mat-toolbar color="primary" id="courses-toolbar">
+    <span class="fill-remaining-space">Civitas Learning</span>
+  </mat-toolbar>
+
+  <div class="form-container">
+    <button class="modal-button" mat-raised-button color="accent" type="button" (click)="onAddCourseClick()">ADD COURSE</button>
+
+    <form [formGroup]="form" (ngSubmit)="searchCourses()" id="courses-form-group">
+
+      <mat-form-field>
+        <mat-label>Search for a course</mat-label>
+        <input matInput aria-label="Course" formControlName="input" [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <button id="submit-btn" class="submit-button" mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Submit</button>
+    </form>
+  </div>
+
+  <div class="table-container">
+    <mat-table [dataSource]="courses" *ngIf="courses.length > 0; else noCoursesMessage" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+        <mat-cell *matCellDef="let event">
+          <button mat-button color="warn" (click)="onRemoveCourseClick(event.id)">Remove</button>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="id" id="col-id">
+        <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+        <mat-cell *matCellDef="let event"> {{event.id}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="subject" id="col-subject">
+        <mat-header-cell *matHeaderCellDef> SUBJECT </mat-header-cell>
+        <mat-cell *matCellDef="let event"> {{event.subject}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="courseNumber" id="col-course-number">
+        <mat-header-cell *matHeaderCellDef> COURSE NUMBER </mat-header-cell>
+        <mat-cell *matCellDef="let event"> {{event.courseNumber}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="description" id="col-description">
+        <mat-header-cell *matHeaderCellDef> DESCRIPTION </mat-header-cell>
+        <mat-cell *matCellDef="let event"> {{event.description}} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <ng-template #noCoursesMessage>
+      <p>No courses to display.</p>
+    </ng-template>
+
+  </div>
+
+</div>

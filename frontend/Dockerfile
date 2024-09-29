@@ -1,29 +1,11 @@
-# Dockerfile for Angular
-FROM node:18 AS build
+FROM node:alpine AS builder
 
-# Set working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the application
 COPY . .
+RUN npm install && npm run build
 
-# Build the Angular app
-RUN npm run build --prod
-
-# Stage 2 - Serve the app with Nginx
 FROM nginx:alpine
 
-# Copy built files from the previous stage
-COPY --from=build /app/dist/untitled /usr/share/nginx/html
-
-# Expose port
-EXPOSE 80
-
-# Start Nginx
-CMD ["nginx", "-g", "daemon off;"]
+COPY --from=builder /app/dist/* /usr/share/nginx/html/
+COPY /nginx.conf /etc/nginx/conf.d/default.conf

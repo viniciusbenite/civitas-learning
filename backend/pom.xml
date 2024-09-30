@@ -70,6 +70,7 @@
 
   <build>
     <plugins>
+      <!-- Maven Compiler Plugin for Java 17 -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -87,8 +88,37 @@
         </configuration>
       </plugin>
 
+      <!-- Maven JAR Plugin (already in your configuration) -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.2.0</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+              <mainClass>com.example.backend.BackendApplication</mainClass> <!-- Ensure this is the correct main class -->
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+
+      <!-- Add Spring Boot Maven Plugin for Packaging -->
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>3.1.4</version> <!-- Adjust the version based on your Spring Boot version -->
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
+
 
 
 </project>

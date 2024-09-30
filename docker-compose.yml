@@ -6,13 +6,13 @@ services:
     build:
       context: ./backend
     ports:
-      - "9000:80"
+      - "8080:8080"
   frontend:
     image: frontend
     container_name: frontend
     build:
       context: ./frontend
     ports:
-      - "4200:80"
+      - "4300:4300"
     depends_on:
       - backend

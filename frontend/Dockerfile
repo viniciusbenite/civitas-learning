@@ -1,11 +1,13 @@
-FROM node:alpine AS builder
+FROM node:alpine
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
-COPY . .
-RUN npm install && npm run build
+COPY . /usr/src/app
 
-FROM nginx:alpine
+RUN npm config set strict-ssl=false
+RUN npm install -g @angular/cli
+RUN npm install
 
-COPY --from=builder /app/dist/* /usr/share/nginx/html/
-COPY /nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 4300
+
+CMD ["ng", "serve", "--host", "0.0.0.0", "--port", "4300"]

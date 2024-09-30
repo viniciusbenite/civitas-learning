@@ -31,7 +31,8 @@ Before using the application, ensure that the following are set up:
 2. Go to the application folder and use docker compose to start the application:
    ```bash
    docker-compose build && docker-compose up
-3. Go to localhost:4200 to access the application.
+3. Alternatively, compile and run the backend repository using Maven and frontend repository using npm.
+4. Go to localhost:4200 to access the application.
 
 ### Usage
 1. Search for a Course
